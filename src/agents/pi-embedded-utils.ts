@@ -36,7 +36,17 @@ export function extractAssistantText(msg: AssistantMessage): string {
         .map((c) => stripMinimaxToolCallXml(c.text).trim())
         .filter(Boolean)
     : [];
-  return blocks.join("\n").trim();
+  const text = blocks.join("\n").trim();
+  
+  // Fallback to thinking if text is empty (for models like xiaomi/mimo-v2-flash:free)
+  if (!text) {
+    const thinking = extractAssistantThinking(msg);
+    if (thinking) {
+      return thinking;
+    }
+  }
+  
+  return text;
 }
 
 export function extractAssistantThinking(msg: AssistantMessage): string {

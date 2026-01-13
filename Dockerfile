@@ -31,4 +31,5 @@ RUN pnpm ui:build
 ENV NODE_ENV=production
 
 #CMD ["node", "dist/index.js"]
-CMD ["sleep", "infinity"]
+#CMD ["sleep", "infinity"]
+CMD ["node", "dist/index.js", "gateway"]
